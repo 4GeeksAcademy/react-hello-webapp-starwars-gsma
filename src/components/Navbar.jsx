@@ -14,7 +14,7 @@ export const Navbar = () => {
 
         <div className="dropdown">
           <button
-            className="btn btn-primary dropdown-toggle"
+            className="btn btn-secondary dropdown-toggle"
             type="button"
             data-bs-toggle="dropdown"
           >
@@ -35,12 +35,14 @@ export const Navbar = () => {
                   <i
                     className="fas fa-trash"
                     style={{ cursor: "pointer" }}
-                    onClick={() =>
+                    onClick={(e) => {
+                      e.stopPropagation();
+
                       dispatch({
                         type: "remove_favorites",
                         payload: item,
-                      })
-                    }
+                      });
+                    }}
                   ></i>
                 </li>
               ))
@@ -51,4 +53,3 @@ export const Navbar = () => {
     </nav>
   );
 };
-

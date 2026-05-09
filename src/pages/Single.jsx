@@ -47,7 +47,7 @@ export const Single = () => {
         </div>
 
         <div className="col-md-6">
-          <h1>{character.name}</h1>
+          <h1 className="single-title">{character.name}</h1>
 
           <p className="mt-3 text-secondary">
             Explore detailed information about {character.name}
@@ -163,7 +163,7 @@ export const Single = () => {
       </div>
 
       <Link to="/">
-        <button className="btn btn-primary mt-5">Back home</button>
+        <button className="btn btn-secondary mt-5">Back home</button>
       </Link>
     </div>
   );
