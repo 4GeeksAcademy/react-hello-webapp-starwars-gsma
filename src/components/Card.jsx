@@ -10,8 +10,10 @@ export const Card = ({
   eye,
   image,
   uid,
-  description1,
-  description2,
+  population,
+  orbital_period,
+  model,
+  manufacturer,
 }) => {
   const { dispatch } = useGlobalReducer();
 
@@ -31,25 +33,47 @@ export const Card = ({
 
         {type === "people" && (
           <>
-            <p className="card-text mb-1">Gender: {gender}</p>
+            <p className="card-text text-white mb-1">
+              <strong>Gender: </strong>
+              {gender}
+            </p>
 
-            <p className="card-text mb-1">Hair Color: {hair}</p>
+            <p className="card-text text-white mb-1">
+              <strong>Hair Color: </strong>
+              {hair}
+            </p>
 
-            <p className="card-text">Eye Color: {eye}</p>
+            <p className="card-text text-white mb-1">
+              <strong>Eye Color:</strong> {eye}
+            </p>
           </>
         )}
 
-        {type !== "people" && (
+        {type === "planets" && (
           <>
-            <p className="card-text mb-1">{description1}</p>
+            <p className="card-text text-white mb-2">
+              <strong>Population:</strong> {population}
+            </p>
 
-            <p className="card-text">{description2}</p>
+            <p className="card-text text-white">
+              <strong>Orbital Period:</strong> {orbital_period}
+            </p>
+          </>
+        )}
+
+        {type === "vehicles" && (
+          <>
+            <p className="card-text text-white mb-1">
+              <strong>Model:</strong> {model}</p>
+
+            <p className="card-text text-white">
+              <strong>Manufacturer:</strong> {manufacturer}</p>
           </>
         )}
 
         <div className="d-flex justify-content-between mt-3">
           <Link to={`/single/${type}/${uid}`}>
-            <button className="btn btn-outline-primary">Learn more!</button>
+            <button className="btn btn-outline-secondary">Learn more!</button>
           </Link>
 
           <button

@@ -134,7 +134,7 @@ body {
 }
 
 .overflow-auto::-webkit-scrollbar-thumb {
-    background: #ef9c9c;
+    background: #777732;
     border-radius: 20px;
 }
 

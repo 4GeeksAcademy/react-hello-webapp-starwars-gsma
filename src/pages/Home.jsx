@@ -8,8 +8,9 @@ export const Home = () => {
   useEffect(() => {
     const getData = async () => {
       try {
+      
         const peopleResponse = await fetch(
-          "https://www.swapi.tech/api/people?page=1&limit=5",
+          "https://www.swapi.tech/api/people?page=1&limit=6",
         );
 
         const peopleData = await peopleResponse.json();
@@ -34,27 +35,61 @@ export const Home = () => {
           payload: peopleWithDetails,
         });
 
+     
         const planetsResponse = await fetch(
-          "https://www.swapi.tech/api/planets?page=1&limit=5",
+          "https://www.swapi.tech/api/planets?page=1&limit=6",
         );
 
         const planetsData = await planetsResponse.json();
 
-        dispatch({
-          type: "get_planets",
-          payload: planetsData.results,
-        });
+        if (planetsData.results) {
+          const planetsWithDetails = await Promise.all(
+            planetsData.results.map(async (planet) => {
+              const response = await fetch(planet.url);
 
+              const data = await response.json();
+
+              return {
+                ...planet,
+                population: data.result.properties.population,
+                orbital_period: data.result.properties.orbital_period,
+              };
+            }),
+          );
+
+          dispatch({
+            type: "get_planets",
+            payload: planetsWithDetails,
+          });
+        }
+
+   
         const vehiclesResponse = await fetch(
-          "https://www.swapi.tech/api/vehicles?page=1&limit=5",
+          "https://www.swapi.tech/api/vehicles?page=1&limit=6",
         );
 
         const vehiclesData = await vehiclesResponse.json();
 
-        dispatch({
-          type: "get_vehicles",
-          payload: vehiclesData.results,
-        });
+        if (vehiclesData.results) {
+          const vehiclesWithDetails = await Promise.all(
+            vehiclesData.results.map(async (vehicle) => {
+              const response = await fetch(vehicle.url);
+
+              const data = await response.json();
+
+              return {
+                ...vehicle,
+                model: data.result.properties.model,
+                manufacturer: data.result.properties.manufacturer,
+              };
+            }),
+          );
+
+          dispatch({
+            type: "get_vehicles",
+            payload: vehiclesWithDetails,
+          });
+        }
       } catch (error) {
         console.log(error);
       }
@@ -66,7 +101,7 @@ export const Home = () => {
   return (
     <div className="container-fluid">
       <div className="section container">
-        <h1 className="text-danger mt-4">
+        <h1 className="text-warning mt-4">
           <strong>Characters</strong>
         </h1>
 
@@ -87,7 +122,7 @@ export const Home = () => {
       </div>
 
       <div className="section container">
-        <h1 className="text-danger mt-4">
+        <h1 className="ttext-warning mt-4">
           <strong>Planets</strong>
         </h1>
 
@@ -98,8 +133,8 @@ export const Home = () => {
               type="planets"
               name={item.name}
               uid={item.uid}
-              description1="Planet from Star Wars"
-              description2="Click to see more details"
+              population={item.population}
+              orbital_period={item.orbital_period}
               image={`https://starwars-visualguide.com/assets/img/planets/${item.uid}.jpg`}
             />
           ))}
@@ -107,7 +142,7 @@ export const Home = () => {
       </div>
 
       <div className="section container">
-        <h1 className="text-danger mt-4">
+        <h1 className="text-warning mt-4">
           <strong>Vehicles</strong>
         </h1>
 
@@ -118,8 +153,8 @@ export const Home = () => {
               type="vehicles"
               name={item.name}
               uid={item.uid}
-              description1="Vehicle from Star Wars"
-              description2="Click to see more details"
+              model={item.model}
+              manufacturer={item.manufacturer}
               image={`https://starwars-visualguide.com/assets/img/vehicles/${item.uid}.jpg`}
             />
           ))}
