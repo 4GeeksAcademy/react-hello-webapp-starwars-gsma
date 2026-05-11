@@ -34,7 +34,6 @@ export const Navbar = () => {
 
                   <i
                     className="fas fa-trash"
-                    style={{ cursor: "pointer" }}
                     onClick={(e) => {
                       e.stopPropagation();
 

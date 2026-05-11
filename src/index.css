@@ -123,23 +123,6 @@ body {
 
 
 
-
-
-.overflow-auto::-webkit-scrollbar {
-    height: 10px;
-}
-
-.overflow-auto::-webkit-scrollbar-track {
-    background: #1a1a1a;
-}
-
-.overflow-auto::-webkit-scrollbar-thumb {
-    background: #777732;
-    border-radius: 20px;
-}
-
-
-
 .single-page {
     background-color: #101010;
     border-radius: 25px;

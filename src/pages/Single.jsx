@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import starwars from "../assets/img/starwars.png"
 
 export const Single = () => {
   const { uid, type } = useParams();
@@ -35,13 +36,14 @@ export const Single = () => {
       <div className="row align-items-center">
         <div className="col-md-6">
           <img
-            src={`https://starwars-visualguide.com/assets/img/${
+            src={`https://starwars-visualguide.com/assets/img/
+              ${
               type === "people" ? "characters" : type
             }/${uid}.jpg`}
             alt={character.name}
             className="img-fluid rounded single-img"
             onError={(e) => {
-              e.target.src = "https://placehold.co/800x400?text=Star+Wars";
+              e.target.src = starwars;
             }}
           />
         </div>

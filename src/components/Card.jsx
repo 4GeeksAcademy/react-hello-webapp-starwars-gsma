@@ -1,6 +1,7 @@
 import React from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer";
 import { Link } from "react-router-dom";
+import starCard from "../assets/img/starCard.png"
 
 export const Card = ({
   type,
@@ -15,16 +16,17 @@ export const Card = ({
   model,
   manufacturer,
 }) => {
-  const { dispatch } = useGlobalReducer();
+  const { store, dispatch } = useGlobalReducer();
+  const isFavorite = store.favorites.includes(name);
 
   return (
-    <div className="card starwars-card">
+ <div className="card starwars-card">
       <img
-        src={image}
+        src={image || starCard}
         alt={name}
         className="card-img-top starwars-img"
         onError={(e) => {
-          e.target.src = "https://placehold.co/400x300?text=Star+Wars";
+          e.target.src = starCard;
         }}
       />
 
@@ -64,10 +66,12 @@ export const Card = ({
         {type === "vehicles" && (
           <>
             <p className="card-text text-white mb-1">
-              <strong>Model:</strong> {model}</p>
+              <strong>Model:</strong> {model}
+            </p>
 
             <p className="card-text text-white">
-              <strong>Manufacturer:</strong> {manufacturer}</p>
+              <strong>Manufacturer:</strong> {manufacturer}
+            </p>
           </>
         )}
 
@@ -77,15 +81,17 @@ export const Card = ({
           </Link>
 
           <button
-            className="btn btn-outline-warning"
+            className={`btn ${
+              isFavorite ? "btn-warning" : "btn-outline-warning"
+            }`}
             onClick={() =>
               dispatch({
-                type: "add_favorites",
+                type: isFavorite ? "remove_favorites" : "add_favorites",
                 payload: name,
               })
             }
           >
-            ♡
+            <i className={isFavorite ? "bi bi-heart-fill" : "bi bi-heart"}></i>
           </button>
         </div>
       </div>
